@@ -1,20 +1,20 @@
-#main_grid,#grid_row,#grid_column{
+.main_grid,.grid_row,.row_cell{
     display: flex;
     border-style: solid;
     border-width: 0.2px;
 }
 
-#main_grid{
+.main_grid{
     flex-direction: column;
     margin: auto;
     width: 1600px; 
     height: 800px;
 }
 
-#grid_row,#grid_column{
+.grid_row,.row_cell{
     flex: 1 0 0;
 }
 
-#grid_column{
+.row_cell{
     display: block;
 }
