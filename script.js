@@ -1,15 +1,14 @@
 function createGrid(){
     const main = document.createElement('div');
-    main.style.cssText = "margin: auto;display: flex; flex-direction: column; border-style: solid;border-width: 0.2px; width: 1600px; height: 800px;";
+    main.id = "main_grid";
     let i,j;
     for (i = 1; i <= 15; i++){
         const row = document.createElement('div');
-        row.style.cssText = "flex:1 0 0; border-style: solid; border-width: 0.2px; display: flex;";
+        row.id = "grid_row";
         for(j = 1; j <= 30; j++){
             const column = document.createElement('div');
-            column.style.cssText = "flex: 1 0 0; border-style: solid; border-width: 0.2px;";
+            column.id = "grid_column";
             column.setAttribute("data-coordinate",`${[i,j]}`);
-            // column.addEventListener("click",startnode(e));
             row.appendChild(column);
         }
         main.appendChild(row);
@@ -75,6 +74,14 @@ class PriorityQueue {
 // function addStartNode(){
 //    cellEventListeners();
 // }   
+
+class Node{
+    constructor(){
+        this.x;
+        this.y;
+        this.cell = document.createElement('div');
+    }
+}
 
 class Graph{
     constructor(){
