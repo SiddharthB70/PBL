@@ -13,6 +13,8 @@ class Graph{
         this.edges = {};
         this.row = 15;
         this.column = 30;
+        this.startNode = {"Event": false, "node": new Node()};
+        this.endNode = {"Event": false, "node": new Node()};
     }
 
     addNode(node){
@@ -32,7 +34,9 @@ class Graph{
         }
     }
 
-    Dijkstras(start, finish) {
+    Dijkstras() {
+        let start = graph.startNode["node"].coordinate;
+        let finish = graph.endNode["node"].coordinate;
         const distanceFromStart = {};
         const nextCheck = new PriorityQueue();
         const visited = {};
@@ -140,26 +144,63 @@ function addEdges(){
     }
 }
 
-function FindStartNode(node){
-    let reqNode = graph.returnNode(node);
-    reqNode.cell.style.backgroundColor = "crimson";
+function findStartNode(){
+    graph.nodes.forEach(function(node){
+        node.cell.addEventListener('click',pickNode);
+    })
 }
 
-function FindEndNode(node){
-    let reqNode = graph.returnNode(node);
-    reqNode.cell.style.backgroundColor = "blue";
+function findEndNode(){
+    graph.nodes.forEach(function(node){
+        node.cell.addEventListener('click',pickNode);
+    })
+}
+
+function pickNode(){
+    let prevNode = removePreviousNode();
+    let presentNode;
+    for(presentNode of graph.nodes){
+        if(presentNode.cell == this)
+            break;
+    }
+    if(presentNode != prevNode){
+        if(graph.startNode["Event"] == true){
+            presentNode.cell.style.backgroundColor = "red";
+            graph.startNode["node"] = presentNode;
+        }
+        else if(graph.endNode["Event"] == true){
+            presentNode.cell.style.backgroundColor = "blue";
+            graph.endNode["node"] = presentNode;
+        }
+    }
+    else
+        presentNode.cell.style.backgroundColor = "white";
+}
+
+function removePreviousNode(){
+    let reqNode;
+    if(graph.startNode["Event"] == true){
+        reqNode = graph.startNode["node"];
+        graph.startNode["node"].cell.style.backgroundColor = "white";
+        graph.startNode["node"] = new Node();
+    }  
+    if(graph.endNode["Event"] == true){
+        reqNode = graph.endNode["node"];
+        graph.endNode["node"].cell.style.backgroundColor = "white";
+        graph.endNode["node"] = new Node();
+    }
+    return reqNode;
 }
 
 function colorPath(result){
-    for (let node of result){
-        let reqNode = graph.returnNode(node);
-        reqNode.cell.style.backgroundColor = "cyan";
+    for(pathNode of result){
+        for(node of graph.nodes){
+            if(pathNode[0]==node.x && pathNode[1] == node.y){
+                node.cell.style.backgroundColor = "cyan";
+            }
+        }
     }
 }
 
 const graph = new Graph();
 createGrid();
-graph.Dijkstras([14,12],[1,3]);
-FindStartNode([14,12]);
-FindEndNode([1,3]);
-

@@ -1,3 +1,7 @@
+body{
+    background-color: hsla(240, 25%, 36%, 0.801);
+}
+
 .main_grid,.grid_row,.row_cell{
     display: flex;
     border-style: solid;
@@ -17,4 +21,25 @@
 
 .row_cell{
     display: block;
+    background-color: white;
+}
+
+.buttons{
+    list-style-type: none;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.button{
+    display: inline-block;
+    text-align: center;
+    width: 200px;
+    color: white;
+    background-color: black;
+    padding: 20px 0;
+    font-size: 20px;
+}
+
+.button:hover{
+    transform: scale(1.2);
 }
