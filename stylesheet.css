@@ -22,7 +22,7 @@ body{
 .row_cell{
     display: block;
     background-color: white;
-    transition: background-color 0.1s;
+    transition: background-color 0.2s;
 }
 
 .buttons{
@@ -39,9 +39,27 @@ body{
     background-color: black;
     padding: 20px 0;
     font-size: 20px;
+    transition: transform 0.2s;
 }
 
 .button:hover{
     transform: scale(1.2);
     transition: transform 0.2s;
+}
+
+.path{
+    background-color: rgb(226, 187, 11);
+    transition: background-color 0.2s;
+}
+
+.start_node{
+    background-color: red;
+}
+
+.end_node{
+    background-color: blue;
+}
+
+.searching{
+    background-color: rgb(7, 112, 102);
 }

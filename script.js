@@ -15,6 +15,7 @@ class Graph{
         this.column = 30;
         this.startNode = {"Event": false, "node": new Node()};
         this.endNode = {"Event": false, "node": new Node()};
+        this.pathNodes = [];
     }
 
     addNode(node){
@@ -35,6 +36,7 @@ class Graph{
     }
 
     Dijkstras() {
+        graph.pathNodes = [];
         let start = graph.startNode["node"].coordinate;
         let finish = graph.endNode["node"].coordinate;
         const distanceFromStart = {};
@@ -54,7 +56,7 @@ class Graph{
             visited[vert.coordinate] = null;
         }
 
-       
+       let searching = [];
         
         while (nextCheck.values.length) {
             current = nextCheck.dequeue().val;
@@ -66,9 +68,11 @@ class Graph{
                 }
                 break;
             }
+
             else{
                 for (let neighbor of this.edges[current]) {
-                    
+                    if(!(searching.includes(neighbor.node)))
+                        searching.push(neighbor.node);
                     let distanceToNeighbor = distanceFromStart[current] + neighbor.weight;
                    
                     if(distanceToNeighbor < distanceFromStart[neighbor.node]){
@@ -79,8 +83,30 @@ class Graph{
                 }
             }
         }
-        colorPath(result.reverse());  
+        let k = 0, searchNode;
+        for(let pathNode of graph.nodes){
+            for(let pathCoordinate of result.reverse()){
+                if(pathNode.x == pathCoordinate[0] && pathNode.y == pathCoordinate[1])
+                    {this.pathNodes.push(pathNode);}
+            }
+                   
+        }   
+        for(let searchNode of searching){
+            for(let pathNode of graph.nodes){
+            if(pathNode.x == searchNode[0] && pathNode.y == searchNode[1]){
+                
+                k++;
+                setTimeout(searchingPath,k*10,pathNode);
+                }
+            } 
+        }
+        setTimeout(colorPath,k*10,this.pathNodes); 
     }
+}
+
+function searchingPath(searchNode){
+    if(searchNode!=graph.startNode["node"] && searchNode!=graph.endNode["node"])
+        searchNode.cell.classList.add("searching");
 }
 
 class PriorityQueue {
@@ -103,10 +129,10 @@ function createGrid(){
     const main = document.createElement('div');
     main.classList.add("main_grid");
     let i,j;
-    for (i = 1; i <= 15; i++){
+    for (i = 1; i <= graph.row; i++){
         const row = document.createElement('div');
         row.classList.add("grid_row");
-        for(j = 1; j <= 30; j++){
+        for(j = 1; j <= graph.column; j++){
             const node = new Node(i,j);
             node.cell.classList.add("row_cell");
             graph.addNode(node);
@@ -167,49 +193,52 @@ function pickNode(){
     }
     if(presentNode != prevNode){
         if(graph.startNode["Event"] == true){
-            presentNode.cell.style.backgroundColor = "red";
+            presentNode.cell.classList.add("start_node");
             graph.startNode["node"] = presentNode;
         }
         else if(graph.endNode["Event"] == true){
-            presentNode.cell.style.backgroundColor = "blue";
+            presentNode.cell.classList.add("end_node");
             graph.endNode["node"] = presentNode;
         }
     }
-    else
-        presentNode.cell.style.backgroundColor = "white";
+   
 }
 
 function removePreviousNode(){
     let reqNode;
     if(graph.startNode["Event"] == true){
         reqNode = graph.startNode["node"];
-        graph.startNode["node"].cell.style.backgroundColor = "white";
+        graph.startNode["node"].cell.classList.remove("start_node");
         graph.startNode["node"] = new Node();
     }  
     if(graph.endNode["Event"] == true){
         reqNode = graph.endNode["node"];
-        graph.endNode["node"].cell.style.backgroundColor = "white";
+        graph.endNode["node"].cell.classList.remove("end_node");
         graph.endNode["node"] = new Node();
     }
     return reqNode;
 }
 
-function colorPath(result){
-    result.pop();
-    for(pathNode of result){
-        for(node of graph.nodes){
-            if(pathNode[0]==node.x && pathNode[1] == node.y){
-                node.cell.style.backgroundColor = "cyan";
-            }
-        }
+function colorPath(pathNodes){
+    let k = 0;
+    pathNodes.pop();
+    for(let pathNode of pathNodes){
+        k++;
+        setTimeout(colorCyan,k*35,pathNode);
     }
+
+}
+
+function colorCyan(node){
+    node.cell.classList.remove("searching");
+    node.cell.classList.add("path");
 }
 
 function clearPath(){
     let node;
     for(node of graph.nodes){
-        if(node != graph.startNode["node"] && node!=graph.endNode["node"])
-            node.cell.style.backgroundColor = "white";
+        node.cell.classList.remove("searching")
+        node.cell.classList.remove("path");
     }
 }
 
