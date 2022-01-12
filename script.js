@@ -2,6 +2,7 @@ class Node{
     constructor(x,y){
         this.x = x;
         this.y = y;
+        this.blocked = false;
         this.coordinate = [this.x,this.y];
         this.cell = document.createElement('div');
     }
@@ -15,6 +16,7 @@ class Graph{
         this.column = 30;
         this.startNode = {"Event": false, "node": new Node()};
         this.endNode = {"Event": false, "node": new Node()};
+        this.blockEvent = false;
         this.pathNodes = [];
     }
 
@@ -58,8 +60,14 @@ class Graph{
 
        let searching = [];
         
-        while (nextCheck.values.length) {
+        check:while (nextCheck.values.length) {
             current = nextCheck.dequeue().val;
+            let blockedNode;
+            for(blockedNode of graph.nodes){
+                if(blockedNode.coordinate.toString() == current.toString() && blockedNode.blocked == true)
+                    continue check;
+            }
+
             if(current[0]==finish[0]&&current[1]==finish[1])
             {
                 while(visited[current]){
@@ -70,7 +78,10 @@ class Graph{
             }
 
             else{
-                for (let neighbor of this.edges[current]) {
+                check1:for (let neighbor of this.edges[current]) {
+                    
+                    
+                    
                     if(!(searching.includes(neighbor.node)))
                         searching.push(neighbor.node);
                     let distanceToNeighbor = distanceFromStart[current] + neighbor.weight;
@@ -83,14 +94,15 @@ class Graph{
                 }
             }
         }
-        let k = 0, searchNode;
-        for(let pathNode of graph.nodes){
-            for(let pathCoordinate of result.reverse()){
+        
+        for(let pathCoordinate of result.reverse()){
+            for(let pathNode of graph.nodes){
                 if(pathNode.x == pathCoordinate[0] && pathNode.y == pathCoordinate[1])
                     {this.pathNodes.push(pathNode);}
             }
-                   
-        }   
+        } 
+
+        let k = 0; 
         for(let searchNode of searching){
             for(let pathNode of graph.nodes){
             if(pathNode.x == searchNode[0] && pathNode.y == searchNode[1]){
@@ -221,7 +233,6 @@ function removePreviousNode(){
 
 function colorPath(pathNodes){
     let k = 0;
-    pathNodes.pop();
     for(let pathNode of pathNodes){
         k++;
         setTimeout(colorCyan,k*35,pathNode);
@@ -239,6 +250,27 @@ function clearPath(){
     for(node of graph.nodes){
         node.cell.classList.remove("searching")
         node.cell.classList.remove("path");
+    }
+}
+
+function findBlockNodes(){
+    graph.nodes.forEach(function(node){
+        node.cell.addEventListener('click',pickBlockNode);
+    })
+}
+
+function pickBlockNode(){
+    for (node of graph.nodes){
+        if(node.cell == this){
+            if(node.blocked == false){
+                node.cell.classList.add("blocked");
+                node.blocked = true;
+            }
+            else{
+                node.cell.classList.remove("blocked");
+                node.blocked = false;
+            }
+        }
     }
 }
 

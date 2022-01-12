@@ -36,6 +36,10 @@ function operation(i){
         graph.endNode["Event"] = true;
         findEndNode();
     }
+    else if(i == 3){
+        graph.blockEvent = true;
+        findBlockNodes();
+    }
     else if(i == 4){
         graph.Dijkstras();
     }
@@ -48,9 +52,13 @@ function removeAllEvents(){
         else if(graph.endNode["Event"] == true){
             node.cell.removeEventListener("click",pickNode);
         }
+        else if(graph.blockEvent == true){
+            node.cell.removeEventListener("click",pickBlockNode);
+        }
     }
     graph.startNode["Event"] = false;
     graph.endNode["Event"] = false;
+    graph.blockEvent = false;
 }
 
 

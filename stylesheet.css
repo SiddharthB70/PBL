@@ -47,6 +47,7 @@ body{
     transition: transform 0.2s;
 }
 
+
 .path{
     background-color: rgb(226, 187, 11);
     transition: background-color 0.2s;
@@ -62,4 +63,8 @@ body{
 
 .searching{
     background-color: rgb(7, 112, 102);
+}
+
+.blocked{
+    background-color: black;
 }
