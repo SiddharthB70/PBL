@@ -6,6 +6,7 @@ function createButtons(){
         button.classList.add("button");
         button.textContent = buttonContent(i);
         button.addEventListener('click',function(e){
+            clearPath();
             operation(i);
         })
         buttons.appendChild(button);

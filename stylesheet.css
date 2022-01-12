@@ -22,6 +22,7 @@ body{
 .row_cell{
     display: block;
     background-color: white;
+    transition: background-color 0.1s;
 }
 
 .buttons{
@@ -42,4 +43,5 @@ body{
 
 .button:hover{
     transform: scale(1.2);
+    transition: transform 0.2s;
 }

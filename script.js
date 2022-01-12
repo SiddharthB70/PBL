@@ -144,6 +144,8 @@ function addEdges(){
     }
 }
 
+
+
 function findStartNode(){
     graph.nodes.forEach(function(node){
         node.cell.addEventListener('click',pickNode);
@@ -193,12 +195,21 @@ function removePreviousNode(){
 }
 
 function colorPath(result){
+    result.pop();
     for(pathNode of result){
         for(node of graph.nodes){
             if(pathNode[0]==node.x && pathNode[1] == node.y){
                 node.cell.style.backgroundColor = "cyan";
             }
         }
+    }
+}
+
+function clearPath(){
+    let node;
+    for(node of graph.nodes){
+        if(node != graph.startNode["node"] && node!=graph.endNode["node"])
+            node.cell.style.backgroundColor = "white";
     }
 }
 
