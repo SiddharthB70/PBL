@@ -19,6 +19,7 @@ class Graph{
         this.addBlockEvent = false;
         this.removeBlockEvent = false;
         this.pathNodes = [];
+        this.pathFound = false;
     }
 
     addNode(node){
@@ -71,6 +72,7 @@ class Graph{
 
             if(current[0]==finish[0]&&current[1]==finish[1])
             {
+                this.pathFound = true;
                 while(visited[current]){
                     result.push(current);
                     current = visited[current];
@@ -95,8 +97,8 @@ class Graph{
                 }
             }
         }
-        
-        for(let pathCoordinate of result.reverse()){
+        result = result.reverse();
+        for(let pathCoordinate of result){
             for(let pathNode of graph.nodes){
                 if(pathNode.x == pathCoordinate[0] && pathNode.y == pathCoordinate[1])
                     {this.pathNodes.push(pathNode);}

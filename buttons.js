@@ -52,12 +52,15 @@ function operation(i){
                 if(time == "NSOE")
                     messageContent("No Start or End Node");
                 else if(time == "NS")
-                    messageContent("No Start Node")
+                    messageContent("No Start Node");
                 else if(time == "NE")
-                    messageContent("No End Node")
+                    messageContent("No End Node");
                 else{
-                    messageContent("Searching...")
-                    setTimeout(messageContent,time*10,"Path Found!!!")
+                    messageContent("Searching...");
+                    if(!graph.pathFound)
+                        setTimeout(messageContent,time*10,"No Path Available");
+                    else
+                        setTimeout(messageContent,time*10,"Path Found!!!");
                 }
                 break;
         case 7: messageContent("Grid Cleared");
