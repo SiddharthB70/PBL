@@ -26,18 +26,21 @@ body{
 }
 
 .buttons{
-    list-style-type: none;
-    white-space: nowrap;
+    margin: 20px;
+    display:flex;
+    justify-content: center;
     text-align: center;
+    
+    word-wrap: break-word;
 }
 
 .button{
-    display: inline-block;
+    flex: 0 0 auto;
     text-align: center;
-    width: 200px;
-    color: white;
+    width: 220px;
+    color: white;    
     background-color: black;
-    padding: 20px 0;
+    padding: 25px 5px;
     font-size: 20px;
     transition: transform 0.2s;
 }
@@ -68,4 +71,16 @@ body{
 .blocked{
     background-color: hsl(0, 0%, 25%);
     transition: background-color 0.05s;
+}
+
+.message_panel{
+    color: white;
+    height: 50px;
+    width: 1360px;
+    margin: auto;
+    margin-top: 20px;
+    padding: 20px;
+    text-align: center;
+    font-size: 26px;
+    background-color: hsla(240, 25%, 30%, 0.801);;
 }

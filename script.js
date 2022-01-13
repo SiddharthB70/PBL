@@ -16,7 +16,8 @@ class Graph{
         this.column = 30;
         this.startNode = {"Event": false, "node": new Node()};
         this.endNode = {"Event": false, "node": new Node()};
-        this.blockEvent = false;
+        this.addBlockEvent = false;
+        this.removeBlockEvent = false;
         this.pathNodes = [];
     }
 
@@ -30,17 +31,17 @@ class Graph{
         this.edges[node1.coordinate].push({node:node2.coordinate,weight: weight});        
     }
 
-    returnNode(node){
-        for(let reqNode of this.nodes){
-            if(node[0] == reqNode.x && node[1] == reqNode.y)
-                return reqNode;
-        }
-    }
-
     Dijkstras() {
         graph.pathNodes = [];
         let start = graph.startNode["node"].coordinate;
         let finish = graph.endNode["node"].coordinate;
+        if(start.toString() == "," && finish.toString()== ",")
+            return "NSOE";
+        else if (start.toString() == ",")
+            return "NS";
+        else if(finish.toString()== ",")
+            return "NE";
+        
         const distanceFromStart = {};
         const nextCheck = new PriorityQueue();
         const visited = {};
@@ -112,7 +113,8 @@ class Graph{
                 }
             } 
         }
-        setTimeout(colorPath,k*10,this.pathNodes); 
+        setTimeout(colorPath,k*10,this.pathNodes);
+        return k;
     }
 }
 
@@ -273,14 +275,13 @@ function pickBlockNode(Event){
     if(Event.buttons == 1){
         for (node of graph.nodes){
             if(node.cell == this){
-                if(node.blocked == false ){
+                if(node.blocked == false && graph.addBlockEvent){
                     node.cell.classList.add("blocked");
                     node.blocked = true;
                 }
-                else{
+                else if(graph.removeBlockEvent){
                     node.cell.classList.remove("blocked");
                     node.blocked = false;
-                    return;
                 }
             }
         }
@@ -296,11 +297,14 @@ function dragBlockNode(Event){
     if(Event.buttons == 1)
         for(node of graph.nodes){
             if(node.cell == this){
-                if(!node.blocked){
-            
+                if(!node.blocked && graph.addBlockEvent){
                     node.cell.classList.add("blocked");
                     node.blocked = true;
-                }                
+                }    
+                else if(graph.removeBlockEvent){
+                    node.cell.classList.remove("blocked");
+                    node.blocked = false;
+                }        
             }
         }
     else
@@ -315,9 +319,31 @@ function lastBlockNode(){
     }
 }
 
+function clearAllBlockNodes(){
+    for(let node of graph.nodes){
+        if(node.blocked){
+            node.cell.classList.remove("blocked");
+            node.blocked = false;
+        }
+    }
+}
+
 function searchingPath(searchNode){
     if(searchNode!=graph.startNode["node"] && searchNode!=graph.endNode["node"])
         searchNode.cell.classList.add("searching");
+}
+
+function clearGrid(){
+    graph.startNode["node"] = new Node();
+    graph.endNode["node"] = new Node();
+    graph.pathNodes = [];
+    for(node of graph.nodes){
+        node.blocked = false;
+        node.cell.classList.remove("start_node");
+        node.cell.classList.remove("end_node");
+        node.cell.classList.remove("blocked");
+    }
+    
 }
 
 const graph = new Graph();
