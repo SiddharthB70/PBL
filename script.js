@@ -116,11 +116,6 @@ class Graph{
     }
 }
 
-function searchingPath(searchNode){
-    if(searchNode!=graph.startNode["node"] && searchNode!=graph.endNode["node"])
-        searchNode.cell.classList.add("searching");
-}
-
 class PriorityQueue {
     constructor(){
         this.values = [];
@@ -182,11 +177,10 @@ function addEdges(){
     }
 }
 
-
-
 function findStartNode(){
     graph.nodes.forEach(function(node){
         node.cell.addEventListener('click',pickNode);
+
     })
 }
 
@@ -203,6 +197,11 @@ function pickNode(){
         if(presentNode.cell == this)
             break;
     }
+    if(presentNode.blocked == true){
+        presentNode.cell.classList.remove("blocked");
+        presentNode.blocked = false;
+    }
+
     if(presentNode != prevNode){
         if(graph.startNode["Event"] == true){
             presentNode.cell.classList.add("start_node");
@@ -213,6 +212,17 @@ function pickNode(){
             graph.endNode["node"] = presentNode;
         }
     }
+
+    if(graph.startNode["node"] == graph.endNode["node"]){
+        if(graph.startNode["Event"]){
+            graph.startNode["node"].cell.classList.remove("end_node");
+            graph.endNode["node"] = new Node();
+        }
+        else if(graph.endNode["Event"]){
+            graph.endNode["node"].cell.classList.remove("start_node");
+            graph.startNode["node"] = new Node();
+        }
+     }
    
 }
 
@@ -235,12 +245,12 @@ function colorPath(pathNodes){
     let k = 0;
     for(let pathNode of pathNodes){
         k++;
-        setTimeout(colorCyan,k*35,pathNode);
+        setTimeout(colorNode,k*35,pathNode);
     }
 
 }
 
-function colorCyan(node){
+function colorNode(node){
     node.cell.classList.remove("searching");
     node.cell.classList.add("path");
 }
@@ -255,23 +265,59 @@ function clearPath(){
 
 function findBlockNodes(){
     graph.nodes.forEach(function(node){
-        node.cell.addEventListener('click',pickBlockNode);
+        node.cell.addEventListener('mousedown',pickBlockNode);
     })
 }
 
-function pickBlockNode(){
-    for (node of graph.nodes){
-        if(node.cell == this){
-            if(node.blocked == false){
-                node.cell.classList.add("blocked");
-                node.blocked = true;
-            }
-            else{
-                node.cell.classList.remove("blocked");
-                node.blocked = false;
+function pickBlockNode(Event){
+    if(Event.buttons == 1){
+        for (node of graph.nodes){
+            if(node.cell == this){
+                if(node.blocked == false ){
+                    node.cell.classList.add("blocked");
+                    node.blocked = true;
+                }
+                else{
+                    node.cell.classList.remove("blocked");
+                    node.blocked = false;
+                    return;
+                }
             }
         }
+        for(node of graph.nodes){
+            node.cell.removeEventListener('mousedown',pickBlockNode);
+            node.cell.addEventListener('mouseover',dragBlockNode);
+        }
     }
+}
+
+function dragBlockNode(Event){
+
+    if(Event.buttons == 1)
+        for(node of graph.nodes){
+            if(node.cell == this){
+                if(!node.blocked){
+            
+                    node.cell.classList.add("blocked");
+                    node.blocked = true;
+                }                
+            }
+        }
+    else
+        lastBlockNode();
+        
+}
+
+function lastBlockNode(){
+    for(node of graph.nodes){
+        node.cell.removeEventListener('mouseover',dragBlockNode);
+        node.cell.addEventListener('mousedown',pickBlockNode);
+    }
+}
+
+function searchingPath(searchNode){
+    if(searchNode!=graph.startNode["node"] && searchNode!=graph.endNode["node"])
+        searchNode.cell.classList.add("searching");
 }
 
 const graph = new Graph();

@@ -43,6 +43,8 @@ function operation(i){
     else if(i == 4){
         graph.Dijkstras();
     }
+
+    
 }
 
 function removeAllEvents(){
@@ -53,13 +55,12 @@ function removeAllEvents(){
             node.cell.removeEventListener("click",pickNode);
         }
         else if(graph.blockEvent == true){
-            node.cell.removeEventListener("click",pickBlockNode);
+            node.cell.removeEventListener("mousedown",pickBlockNode);
         }
     }
     graph.startNode["Event"] = false;
     graph.endNode["Event"] = false;
     graph.blockEvent = false;
 }
-
 
 createButtons();

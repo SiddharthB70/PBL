@@ -11,8 +11,8 @@ body{
 .main_grid{
     flex-direction: column;
     margin: auto;
-    width: 1600px; 
-    height: 800px;
+    width: 1400px; 
+    height: 700px;
 }
 
 .grid_row,.row_cell{
@@ -49,22 +49,23 @@ body{
 
 
 .path{
-    background-color: rgb(226, 187, 11);
+    background-color:rgb(97, 240, 221);
     transition: background-color 0.2s;
 }
 
 .start_node{
-    background-color: red;
+    background-color: crimson;
 }
 
 .end_node{
-    background-color: blue;
+    background-color: darkblue
 }
 
 .searching{
-    background-color: rgb(7, 112, 102);
+    background-color: rgb(32, 134, 165);
 }
 
 .blocked{
-    background-color: black;
+    background-color: hsl(0, 0%, 25%);
+    transition: background-color 0.05s;
 }
