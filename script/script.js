@@ -152,27 +152,26 @@ function createGrid(){
         main.appendChild(row);
     }
     addEdges();
-    document.body.appendChild(main);
-      
+    document.body.appendChild(main);      
 }
 
 function addEdges(){
     let k = 0;
     while(k < graph.nodes.length){
         let node = graph.nodes[k], required;
-        right:if(node.y < graph.column){
+        if(node.y < graph.column){  //right
             required = graph.nodes[k+1];
             graph.addEdge(graph.nodes[k],required);
         }
-        left:if(node.y > 1){
+        if(node.y > 1){  //left  
             required = graph.nodes[k-1];
             graph.addEdge(graph.nodes[k],required);
         }
-        down:if(node.x < graph.row){
+        if(node.x < graph.row){    //down
             required = graph.nodes[k+graph.column];
             graph.addEdge(graph.nodes[k],required);
         }
-        up:if(node.x > 1){
+        if(node.x > 1){  //up
             required = graph.nodes[k-graph.column];
             graph.addEdge(graph.nodes[k],required);
         }
