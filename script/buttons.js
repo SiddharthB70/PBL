@@ -48,7 +48,7 @@ function operation(i){
         case 5: messageContent("Cleared All Blocked Nodes");clearAllBlockNodes();
                 break;
         case 6:
-                let time = graph.Dijkstras();
+                let time = dijkstras();
                 if(time == "NSOE")
                     messageContent("No Start or End Node");
                 else if(time == "NS")
