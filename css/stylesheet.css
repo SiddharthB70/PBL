@@ -30,17 +30,15 @@ body{
     display:flex;
     justify-content: center;
     text-align: center;
-    
     word-wrap: break-word;
 }
 
 .button{
     flex: 0 0 auto;
     text-align: center;
-    width: 220px;
     color: white;    
     background-color: black;
-    padding: 25px 5px;
+    padding: 25px 20px;
     font-size: 20px;
     transition: transform 0.2s;
 }

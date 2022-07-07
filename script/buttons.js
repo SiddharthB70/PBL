@@ -1,7 +1,7 @@
 function createButtons(){
     const buttons = document.createElement('div');
     buttons.classList.add("buttons");
-    for(let i = 1; i <= 7; i++){
+    for(let i = 1; i <= 8; i++){
         const button = document.createElement('div');
         button.classList.add("button");
         button.textContent = buttonContent(i);
@@ -22,7 +22,8 @@ function buttonContent(i){
         case 4: return "Remove Blocked Nodes";
         case 5: return "Clear Blocked Nodes";
         case 6: return "Dijkstra's Algorithm";
-        case 7: return "Clear Grid"
+        case 7: return "A* Aglorithm"
+        case 8: return "Clear Grid"
     }
 }
 
@@ -47,23 +48,10 @@ function operation(i){
                 break;
         case 5: messageContent("Cleared All Blocked Nodes");clearAllBlockNodes();
                 break;
-        case 6:
-                let time = dijkstras();
-                if(time == "NSOE")
-                    messageContent("No Start or End Node");
-                else if(time == "NS")
-                    messageContent("No Start Node");
-                else if(time == "NE")
-                    messageContent("No End Node");
-                else{
-                    messageContent("Searching...");
-                    if(!graph.pathFound)
-                        setTimeout(messageContent,time*10,"No Path Available");
-                    else
-                        setTimeout(messageContent,time*10,"Path Found!!!");
-                }
+        case 6: graphReady(1);
                 break;
-        case 7: messageContent("Grid Cleared");
+        case 7: break;
+        case 8: messageContent("Grid Cleared");
                 clearGrid();
                 break;
     }     

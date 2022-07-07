@@ -4,26 +4,26 @@ class PriorityQueue {
     }
     enqueue(val, priority) {
         this.values.push({val, priority});
-        this.sort();
+        this.Sort();
     };
     dequeue() {
         return this.values.shift();
     };
-    sort() {
+    Sort() {
         this.values.sort((a, b) => a.priority - b.priority);
     };
 }
 
-function dijkstras() {
+function dijkstras(start,finish) {
     graph.pathNodes = [];
-    let start = graph.startNode["node"].coordinate;
-    let finish = graph.endNode["node"].coordinate;
-    if(start.toString() == "," && finish.toString()== ",")
-        return "NSOE";
-    else if (start.toString() == ",")
-        return "NS";
-    else if(finish.toString()== ",")
-        return "NE";
+    // let start = graph.startNode["node"].coordinate;
+    // let finish = graph.endNode["node"].coordinate;
+    // if(start.toString() == "," && finish.toString()== ",")
+    //     return "NSOE";
+    // else if (start.toString() == ",")
+    //     return "NS";
+    // else if(finish.toString()== ",")
+    //     return "NE";
     
     const distanceFromStart = {};
     const nextCheck = new PriorityQueue();
@@ -63,10 +63,7 @@ function dijkstras() {
         }
 
         else{
-            check1:for (let neighbor of graph.edges[current]) {
-                
-                
-                
+            for (let neighbor of graph.edges[current]) {
                 if(!(searching.includes(neighbor.node)))
                     searching.push(neighbor.node);
                 let distanceToNeighbor = distanceFromStart[current] + neighbor.weight;

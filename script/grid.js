@@ -226,6 +226,9 @@ function clearAllBlockNodes(){
     }
 }
 
+function searching(){
+
+}
 function searchingPath(searchNode){
     if(searchNode!=graph.startNode["node"] && searchNode!=graph.endNode["node"])
         searchNode.cell.classList.add("searching");
@@ -242,6 +245,29 @@ function clearGrid(){
         node.cell.classList.remove("blocked");
     }
     
+}
+
+function graphReady(algorithm){
+    let start = graph.startNode["node"].coordinate;
+    let finish = graph.endNode["node"].coordinate;
+    if(start.toString() == "," && finish.toString()== ",")
+        messageContent("No Start or End Node");
+    else if (start.toString() == ",")
+        messageContent("No Start Node");
+    else if(finish.toString()== ",")
+        messageContent("No End Node");
+    else{
+        messageContent("Searching...");
+        let time;
+        switch(algorithm){
+            case 1: time = dijkstras(start,finish);
+                    break;
+        }
+        if(!graph.pathFound)
+                        setTimeout(messageContent,time*10,"No Path Available");
+                    else
+                        setTimeout(messageContent,time*10,"Path Found!!!");
+    }
 }
 
 const graph = new Graph();
