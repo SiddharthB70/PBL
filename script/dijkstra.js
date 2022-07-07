@@ -15,16 +15,7 @@ class PriorityQueue {
 }
 
 function dijkstras(start,finish) {
-    graph.pathNodes = [];
-    // let start = graph.startNode["node"].coordinate;
-    // let finish = graph.endNode["node"].coordinate;
-    // if(start.toString() == "," && finish.toString()== ",")
-    //     return "NSOE";
-    // else if (start.toString() == ",")
-    //     return "NS";
-    // else if(finish.toString()== ",")
-    //     return "NE";
-    
+    graph.pathNodesDijkstras = [];  
     const distanceFromStart = {};
     const nextCheck = new PriorityQueue();
     const visited = {};
@@ -80,10 +71,11 @@ function dijkstras(start,finish) {
     for(let pathCoordinate of result){
         for(let pathNode of graph.nodes){
             if(pathNode.x == pathCoordinate[0] && pathNode.y == pathCoordinate[1])
-                {graph.pathNodes.push(pathNode);}
+                {graph.pathNodesDijkstras.push(pathNode);}
         }
     } 
 
+    let returnValue = {"searching":searching}
     let k = 0; 
     for(let searchNode of searching){
         for(let pathNode of graph.nodes){
@@ -94,6 +86,6 @@ function dijkstras(start,finish) {
             }
         } 
     }
-    setTimeout(colorPath,k*10,graph.pathNodes);
+    setTimeout(colorPath,k*10,graph.pathNodesDijkstras);
     return k;
 }

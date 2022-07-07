@@ -18,7 +18,7 @@ class Graph{
         this.endNode = {"Event": false, "node": new Node()};
         this.addBlockEvent = false;
         this.removeBlockEvent = false;
-        this.pathNodes = [];
+        this.pathNodesDijkstras = [];
         this.pathFound = false;
     }
 
