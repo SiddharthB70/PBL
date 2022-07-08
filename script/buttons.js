@@ -1,7 +1,7 @@
 function createButtons(){
     const buttons = document.createElement('div');
     buttons.classList.add("buttons");
-    for(let i = 1; i <= 8; i++){
+    for(let i = 1; i <= 9; i++){
         const button = document.createElement('div');
         button.classList.add("button");
         button.textContent = buttonContent(i);
@@ -24,6 +24,7 @@ function buttonContent(i){
         case 6: return "Dijkstra's Algorithm";
         case 7: return "A* Aglorithm"
         case 8: return "Clear Grid"
+        case 9: return "Compare"
     }
 }
 
@@ -55,6 +56,8 @@ function operation(i){
         case 8: messageContent("Grid Cleared");
                 clearGrid();
                 break;
+        case 9: graphReady(3);
+                break;
     }     
 }
 
@@ -73,6 +76,10 @@ function removeAllEvents(){
     graph.endNode["Event"] = false;
     graph.addBlockEvent = false;
     graph.removeBlockEvent = false;
+    const dijkstrasRow = document.getElementById("dijkstras");
+    const astarRow = document.getElementById("astar");
+    dijkstrasRow.removeEventListener("click",dijkstrasShow);
+    astarRow.removeEventListener("click",aStarShow);
 }
 
 function createMessagePanel(){

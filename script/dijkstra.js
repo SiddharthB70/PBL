@@ -15,6 +15,7 @@ class PriorityQueue {
 }
 
 function dijkstras(start,finish) {
+    graph.pathFound = false;
     graph.pathNodesDijkstras = [];  
     const distanceFromStart = {};
     const nextCheck = new PriorityQueue();
@@ -22,12 +23,16 @@ function dijkstras(start,finish) {
 
     let current;
     let result = [];
+    let comparisons = 0;
     for (let vert of graph.nodes) {
+        comparisons++;
         if (vert.x==start[0] && vert.y==start[1]) {
+            comparisons++
             distanceFromStart[vert.coordinate] = 0;
             nextCheck.enqueue(vert.coordinate, 0);
         } 
         else {
+            comparisons++;
             distanceFromStart[vert.coordinate] = Infinity;
         }
         visited[vert.coordinate] = null;

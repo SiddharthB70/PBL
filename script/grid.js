@@ -262,12 +262,14 @@ function graphReady(algorithm){
                     break;
             case 2: result = aStar(start,finish);
                     break;
+            case 3: compare(start,finish);
+        }if(algorithm!=3){
+            time = searching(result);
         }
-        time = searching(result);
         if(!graph.pathFound)
                         setTimeout(messageContent,time*10,"No Path Available");
                     else
-                        setTimeout(messageContent,time*10,"Path Found!!!");
+                        setTimeout(messageContent,time*10,"Path Found!!!");        
     }
 }
 
@@ -284,6 +286,8 @@ function searching(result){
     setTimeout(colorPath,k*10,result.path);
     return k;
 }
+
+
 
 const graph = new Graph();
 createGrid();

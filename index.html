@@ -7,8 +7,27 @@
         <script src = "script/grid.js" defer></script>
         <script src = "script/dijkstra.js" defer></script>
         <script src = "script/a_star.js" defer></script>
+        <script src = "script/compare.js" defer></script>
         <script src = "script/buttons.js" defer></script>
     </head>
     <body>
+        <table id="compare-table">
+            <thead>
+                <tr>
+                    <th>Algorithm</th>
+                    <th>Time Taken(in ms)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="dijkstras">
+                    <td>Dijkstra's</td>
+                    <td id="dijkstras-content"></td>
+                </tr>
+                <tr id="astar">
+                    <td>A*</td>
+                    <td id="astar-content"></td>
+                </tr>
+            </tbody>
+        </table>
     </body>
 </html>

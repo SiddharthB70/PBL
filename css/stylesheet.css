@@ -82,3 +82,26 @@ body{
     font-size: 26px;
     background-color: hsla(240, 25%, 30%, 0.801);;
 }
+
+#compare-table{
+    color: white;
+    position: absolute;
+    top: 100vh;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(64, 61, 61);
+    width: 500px;
+    text-align: center;
+}
+
+#compare-table td, #compare-table th{
+    padding: 10px 20px;
+}
+
+#compare-table tr:hover{
+    background-color: black;
+}
+
+#compare-table th{
+    font-size: 20px;
+}
