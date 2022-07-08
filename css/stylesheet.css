@@ -10,7 +10,6 @@ body{
 
 .main_grid{
     flex-direction: column;
-    margin: auto;
     width: 1400px; 
     height: 700px;
 }
@@ -90,7 +89,7 @@ body{
     left: 50%;
     transform: translateX(-50%);
     background-color: rgb(64, 61, 61);
-    width: 500px;
+    width: 750px;
     text-align: center;
 }
 

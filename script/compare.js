@@ -14,6 +14,10 @@ function compare(start,finish){
     let aStarTime = finishTime - startTime;
     const aStarEle = document.getElementById("astar-content");
     aStarEle.textContent = aStarTime;
+    const dijkstrasComp = document.getElementById("dcomparisons");
+    dijkstrasComp.textContent = dijkstrasResult.comparisons;
+    const astarComp = document.getElementById("acomparisons");
+    astarComp.textContent = aStarResult.comparisons;
     const dijkstrasRow = document.getElementById("dijkstras");
     const astarRow = document.getElementById("astar");
     dijkstrasRow.addEventListener("click",dijkstrasShow);

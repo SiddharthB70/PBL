@@ -42,6 +42,7 @@ function dijkstras(start,finish) {
     
     check:while (nextCheck.values.length) {
         current = nextCheck.dequeue().val;
+        comparisons++;
         let blockedNode;
         for(blockedNode of graph.nodes){
             if(blockedNode.coordinate.toString() == current.toString() && blockedNode.blocked == true)
@@ -51,7 +52,9 @@ function dijkstras(start,finish) {
         if(current[0]==finish[0]&&current[1]==finish[1])
         {
             graph.pathFound = true;
+            comparisons++;
             while(visited[current]){
+                comparisons++;
                 result.push(current);
                 current = visited[current];
             }
@@ -60,11 +63,17 @@ function dijkstras(start,finish) {
 
         else{
             for (let neighbor of graph.edges[current]) {
+                comparisons++;
                 if(!(searching.includes(neighbor.node)))
+                {
                     searching.push(neighbor.node);
+                    comparisons++;
+                }
+                    
                 let distanceToNeighbor = distanceFromStart[current] + neighbor.weight;
                
                 if(distanceToNeighbor < distanceFromStart[neighbor.node]){
+                    comparisons++
                     distanceFromStart[neighbor.node] = distanceToNeighbor;
                     visited[neighbor.node] = current;
                     nextCheck.enqueue(neighbor.node, distanceFromStart);
@@ -80,5 +89,5 @@ function dijkstras(start,finish) {
         }
     } 
 
-    return {"searching":searching,"path":graph.pathNodesDijkstras};
+    return {"searching":searching,"path":graph.pathNodesDijkstras,"comparisons":comparisons};
 }

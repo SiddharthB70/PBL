@@ -42,20 +42,26 @@ function aStar(startNode,finishNode){
 
 function search(grid) {
   let searching = [];
+  let comparisons = 0;
   while (grid.openSet.length > 0) {
+    comparisons++;
     let lowestIndex = 0;
     for (let i = 0; i < grid.openSet.length; i++) {
+      comparisons++
       if (grid.openSet[i].f < grid.openSet[lowestIndex].f) {
+        comparisons++;
         lowestIndex = i;
       }
     }
     let current = grid.openSet[lowestIndex];
 
     if (current.coordinate.toString() == grid.end.coordinate.toString()) {
+      comparisons++;
       graph.pathFound = true;
       let temp = current;
       grid.path.push(temp);
       while (temp.parent) {
+        comparisons++;
         grid.path.push(temp.parent);
         temp = temp.parent;
       }
@@ -66,7 +72,7 @@ function search(grid) {
         }
       }
       graph.pathNodesAStar = graph.pathNodesAStar.reverse();
-      return {"searching":searching,"path":graph.pathNodesAStar};
+      return {"searching":searching,"path":graph.pathNodesAStar,"comparisons":comparisons};
     }
 
     //remove current from grid.openSet
@@ -75,29 +81,37 @@ function search(grid) {
     grid.closedSet.push(current);
   
     for (let neigh of graph.edges[current.coordinate]) {
+      comparisons++;
       let presentNode = findGraphNode(neigh.node);
-      if(presentNode.blocked == true)
+      if(presentNode.blocked == true){
         continue;
+      }
       let neighbor = findNode(neigh.node,grid);
-      if(!searching.includes(neighbor.coordinate))
+      if(!searching.includes(neighbor.coordinate)){
         searching.push(neighbor.coordinate);
+        comparisons++;
+      }
+        
       if (!grid.closedSet.includes(neighbor)) {
         let possibleG = current.g + 1;
-
+        comparisons++;
         if (!grid.openSet.includes(neighbor)) {
           grid.openSet.push(neighbor);
+          comparisons++;
         } else if (possibleG >= neighbor.g) {
+          comparisons++;
           continue;
         }
 
         neighbor.g = possibleG;
         neighbor.h = heuristic(neighbor, grid.end);
+        comparisons++;
         neighbor.f = neighbor.g + neighbor.h;
         neighbor.parent = current;
       }
     }
   }
-  return {"searching":searching,"path":graph.pathNodesAStar};
+  return {"searching":searching,"path":graph.pathNodesAStar,"comparisons":comparisons};
 }
   
 
