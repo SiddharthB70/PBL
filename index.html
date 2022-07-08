@@ -11,26 +11,47 @@
         <script src = "script/buttons.js" defer></script>
     </head>
     <body>
-        <table id="compare-table">
-            <thead>
-                <tr>
-                    <th>Algorithm</th>
-                    <th>Time Taken(in ms)</th>
-                    <th>Comparisons</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr id="dijkstras">
-                    <td>Dijkstra's</td>
-                    <td id="dijkstras-content"></td>
-                    <td id="dcomparisons"></td>
-                </tr>
-                <tr id="astar">
-                    <td>A*</td>
-                    <td id="astar-content"></td>
-                    <td id = "acomparisons"></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="left_container">
+            <div class="main_grid"></div>
+            <div class="message_panel"></div>
+        </div>
+        <div class="right_container">
+            <div class="buttons">
+                <div class="button">Start Node</div>
+                <div class="button">End Node</div>
+                <div class="button">Add Blocked Nodes</div>
+            </div>
+            <div class="buttons">
+                <div class="button">Remove Blocked Nodes</div>
+                <div class="button">Clear Blocked Nodes</div>
+                <div class="button">Clear Grid</div>
+            </div>
+            <div class="buttons">
+                <div class="button">Dijkstra's Algorithm</div>
+                <div class="button">A* Algorithm</div>
+                <div class="button">Compare Algorithms</div>
+            </div>
+            <table id="compare-table">
+                <thead>
+                    <tr>
+                        <th>Algorithm</th>
+                        <th>Time Taken(in ms)</th>
+                        <th>Comparisons</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="dijkstras">
+                        <td>Dijkstra's</td>
+                        <td id="dijkstras-content"></td>
+                        <td id="dcomparisons"></td>
+                    </tr>
+                    <tr id="astar">
+                        <td>A*</td>
+                        <td id="astar-content"></td>
+                        <td id = "acomparisons"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>

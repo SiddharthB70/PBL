@@ -1,32 +1,26 @@
 function createButtons(){
-    const buttons = document.createElement('div');
-    buttons.classList.add("buttons");
+    const buttons = document.getElementsByClassName("button")
     for(let i = 1; i <= 9; i++){
-        const button = document.createElement('div');
-        button.classList.add("button");
-        button.textContent = buttonContent(i);
-        button.addEventListener('click',function(e){
+        buttons[i-1].addEventListener('click',function(e){
             clearPath();
             operation(i);
         })
-        buttons.appendChild(button);
     }
-    document.body.appendChild(buttons);
 }
 
-function buttonContent(i){
-    switch(i){
-        case 1: return "Start Node";
-        case 2: return "End Node";
-        case 3: return "Add Blocked Nodes";
-        case 4: return "Remove Blocked Nodes";
-        case 5: return "Clear Blocked Nodes";
-        case 6: return "Dijkstra's Algorithm";
-        case 7: return "A* Aglorithm"
-        case 8: return "Clear Grid"
-        case 9: return "Compare"
-    }
-}
+// function buttonContent(i){
+//     switch(i){
+//         case 1: return "Start Node";
+//         case 2: return "End Node";
+//         case 3: return "Add Blocked Nodes";
+//         case 4: return "Remove Blocked Nodes";
+//         case 5: return "Clear Blocked Nodes";
+//         case 6: return "Dijkstra's Algorithm";
+//         case 7: return "A* Aglorithm"
+//         case 8: return "Clear Grid"
+//         case 9: return "Compare"
+//     }
+// }
 
 function operation(i){
     removeAllEvents();
@@ -49,12 +43,12 @@ function operation(i){
                 break;
         case 5: messageContent("Cleared All Blocked Nodes");clearAllBlockNodes();
                 break;
-        case 6: graphReady(1);
-                break;
-        case 7: graphReady(2);
-                break;
-        case 8: messageContent("Grid Cleared");
+        case 6: messageContent("Grid Cleared");
                 clearGrid();
+                break;
+        case 7: graphReady(1);
+                break;
+        case 8: graphReady(2);
                 break;
         case 9: graphReady(3);
                 break;
@@ -82,17 +76,11 @@ function removeAllEvents(){
     astarRow.removeEventListener("click",aStarShow);
 }
 
-function createMessagePanel(){
-    const div = document.createElement('div');
-    div.classList.add("message_panel")
-    document.body.appendChild(div);
-}
 
 function messageContent(content = "No Operation"){
     const div = document.querySelector(".message_panel");
     div.textContent = content;
 }
 
-createMessagePanel();
 messageContent();
 createButtons();

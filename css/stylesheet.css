@@ -1,5 +1,13 @@
 body{
     background-color: hsla(240, 25%, 36%, 0.801);
+    display: flex;
+    height: 100vh;
+    justify-content: space-between;
+}
+
+.left_container{
+    flex: 0 0 1400px;
+    align-self: center;
 }
 
 .main_grid,.grid_row,.row_cell{
@@ -11,7 +19,7 @@ body{
 .main_grid{
     flex-direction: column;
     width: 1400px; 
-    height: 700px;
+    height: 800px;
 }
 
 .grid_row,.row_cell{
@@ -23,23 +31,36 @@ body{
     background-color: white;
     transition: background-color 0.2s;
 }
+.right_container{
+    margin-top: 15px;
+    flex: 0 0 490px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .buttons{
-    margin: 20px;
-    display:flex;
+    flex: 0 0 auto;
+    width: 490px;
+    display: flex;
     justify-content: center;
     text-align: center;
     word-wrap: break-word;
 }
 
 .button{
-    flex: 0 0 auto;
-    text-align: center;
+    box-sizing: border-box;
+    padding: 20px; 
+    flex: 0 0 163px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: white;    
     background-color: black;
-    padding: 25px 20px;
-    font-size: 20px;
+    font-size: 17px;
     transition: transform 0.2s;
+    border-color: hsla(240, 25%, 30%, 0.801);
+    border-style: ridge;
 }
 
 .button:hover{
@@ -79,17 +100,14 @@ body{
     padding: 20px;
     text-align: center;
     font-size: 26px;
-    background-color: hsla(240, 25%, 30%, 0.801);;
+    background-color: hsla(240, 25%, 30%, 0.801);
 }
 
 #compare-table{
+    margin-top: 20px;
     color: white;
-    position: absolute;
-    top: 100vh;
-    left: 50%;
-    transform: translateX(-50%);
     background-color: rgb(64, 61, 61);
-    width: 750px;
+    width: 450px;
     text-align: center;
 }
 
@@ -97,7 +115,7 @@ body{
     padding: 10px 20px;
 }
 
-#compare-table tr:hover{
+#compare-table tbody tr:hover{
     background-color: black;
 }
 

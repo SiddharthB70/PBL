@@ -12,7 +12,7 @@ class Graph{
     constructor(){
         this.nodes = [];
         this.edges = {};
-        this.row = 15;
+        this.row = 17;
         this.column = 30;
         this.startNode = {"Event": false, "node": new Node()};
         this.endNode = {"Event": false, "node": new Node()};
@@ -35,8 +35,7 @@ class Graph{
 }
 
 function createGrid(){
-    const main = document.createElement('div');
-    main.classList.add("main_grid");
+    const main = document.querySelector(".main_grid");
     let i,j;
     for (i = 1; i <= graph.row; i++){
         const row = document.createElement('div');
@@ -49,8 +48,7 @@ function createGrid(){
         }
         main.appendChild(row);
     }
-    addEdges();
-    document.body.appendChild(main);      
+    addEdges();      
 }
 
 function addEdges(){
@@ -142,20 +140,6 @@ function removePreviousNode(){
     return reqNode;
 }
 
-function colorPath(pathNodes){
-    let k = 0;
-    for(let pathNode of pathNodes){
-        k++;
-        setTimeout(colorNode,k*35,pathNode);
-    }
-
-}
-
-function colorNode(node){
-    node.cell.classList.remove("searching");
-    node.cell.classList.add("path");
-}
-
 function clearPath(){
     let node;
     for(node of graph.nodes){
@@ -227,24 +211,6 @@ function clearAllBlockNodes(){
     }
 }
 
-function searchingPath(searchNode){
-    if(searchNode!=graph.startNode["node"] && searchNode!=graph.endNode["node"])
-        searchNode.cell.classList.add("searching");
-}
-
-function clearGrid(){
-    graph.startNode["node"] = new Node();
-    graph.endNode["node"] = new Node();
-    graph.pathNodes = [];
-    for(node of graph.nodes){
-        node.blocked = false;
-        node.cell.classList.remove("start_node");
-        node.cell.classList.remove("end_node");
-        node.cell.classList.remove("blocked");
-    }
-    
-}
-
 function graphReady(algorithm){
     let start = graph.startNode["node"].coordinate;
     let finish = graph.endNode["node"].coordinate;
@@ -273,6 +239,11 @@ function graphReady(algorithm){
     }
 }
 
+function searchingPath(searchNode){
+    if(searchNode!=graph.startNode["node"] && searchNode!=graph.endNode["node"])
+        searchNode.cell.classList.add("searching");
+}
+
 function searching(result){
     let k = 0; 
     for(let searchNode of result.searching){
@@ -287,7 +258,32 @@ function searching(result){
     return k;
 }
 
+function colorPath(pathNodes){
+    let k = 0;
+    for(let pathNode of pathNodes){
+        k++;
+        setTimeout(colorNode,k*35,pathNode);
+    }
 
+}
+
+function colorNode(node){
+    node.cell.classList.remove("searching");
+    node.cell.classList.add("path");
+}
+
+function clearGrid(){
+    graph.startNode["node"] = new Node();
+    graph.endNode["node"] = new Node();
+    graph.pathNodes = [];
+    for(node of graph.nodes){
+        node.blocked = false;
+        node.cell.classList.remove("start_node");
+        node.cell.classList.remove("end_node");
+        node.cell.classList.remove("blocked");
+    }
+    
+}
 
 const graph = new Graph();
 createGrid();
