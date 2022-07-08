@@ -75,17 +75,5 @@ function dijkstras(start,finish) {
         }
     } 
 
-    let returnValue = {"searching":searching}
-    let k = 0; 
-    for(let searchNode of searching){
-        for(let pathNode of graph.nodes){
-        if(pathNode.x == searchNode[0] && pathNode.y == searchNode[1]){
-            
-            k++;
-            setTimeout(searchingPath,k*10,pathNode);
-            }
-        } 
-    }
-    setTimeout(colorPath,k*10,graph.pathNodesDijkstras);
-    return k;
+    return {"searching":searching,"path":graph.pathNodesDijkstras};
 }

@@ -19,6 +19,7 @@ class Graph{
         this.addBlockEvent = false;
         this.removeBlockEvent = false;
         this.pathNodesDijkstras = [];
+        this.pathNodesAStar = [];
         this.pathFound = false;
     }
 
@@ -226,9 +227,6 @@ function clearAllBlockNodes(){
     }
 }
 
-function searching(){
-
-}
 function searchingPath(searchNode){
     if(searchNode!=graph.startNode["node"] && searchNode!=graph.endNode["node"])
         searchNode.cell.classList.add("searching");
@@ -258,18 +256,33 @@ function graphReady(algorithm){
         messageContent("No End Node");
     else{
         messageContent("Searching...");
-        let time;
+        let time,result;
         switch(algorithm){
-            case 1: time = dijkstras(start,finish);
+            case 1: result = dijkstras(start,finish);
                     break;
-            case 2: time = aStar(start,finish);
+            case 2: result = aStar(start,finish);
                     break;
         }
+        time = searching(result);
         if(!graph.pathFound)
                         setTimeout(messageContent,time*10,"No Path Available");
                     else
                         setTimeout(messageContent,time*10,"Path Found!!!");
     }
+}
+
+function searching(result){
+    let k = 0; 
+    for(let searchNode of result.searching){
+        for(let pathNode of graph.nodes){
+        if(pathNode.x == searchNode[0] && pathNode.y == searchNode[1]){
+            k++;
+            setTimeout(searchingPath,k*10,pathNode);
+            }
+        } 
+    }
+    setTimeout(colorPath,k*10,result.path);
+    return k;
 }
 
 const graph = new Graph();

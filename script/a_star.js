@@ -2,7 +2,7 @@ class Grid{
     constructor(){
       this.openSet = [];
       this.closedSet = [];
-      this.path=[];
+      this.path = [];
       this.nodes = [];
       this.start;
       this.end;
@@ -12,81 +12,97 @@ class Grid{
     }
 }
 
-const grid = new Grid();
-
-function findNode(coordinate){
+function findNode(coordinate,grid){
   return grid.nodes.find(node=>{
     if(node.coordinate.toString()==coordinate.toString())
       return node;
   })
 }
 
+function findGraphNode(coordinate){
+  return graph.nodes.find(node=>{
+    if(node.coordinate.toString()==coordinate.toString())
+      return node;
+  })
+}
 
 function aStar(startNode,finishNode){
-    for(let node of graph.nodes){
-        grid.add(node.coordinate,0,0,0,undefined);
-    }
-    grid.start = findNode(startNode);
-    grid.end = findNode(finishNode);
-    grid.openSet.push(grid.start);
-    search();
+  const grid = new Grid();
+  graph.pathFound = false;
+  graph.pathNodesAStar = [];
+  for(let node of graph.nodes){
+      grid.add(node.coordinate,0,0,0,undefined);
+  }
+  grid.start = findNode(startNode,grid);
+  grid.end = findNode(finishNode,grid);
+  grid.openSet.push(grid.start);
+  return search(grid);
 }
 
 
-function search() {
-    while (grid.openSet.length > 0) {
-      let lowestIndex = 0;
-      for (let i = 0; i < grid.openSet.length; i++) {
-        if (grid.openSet[i].f < grid.openSet[lowestIndex].f) {
-          lowestIndex = i;
-        }
-      }
-      let current = grid.openSet[lowestIndex];
-  
-      if (current.coordinate.toString() == grid.end.coordinate.toString()) {
-        let temp = current;
-        grid.path.push(temp);
-        while (temp.parent) {
-          grid.path.push(temp.parent);
-          temp = temp.parent;
-        }
-        console.log("DONE!");
-        // return the traced grid.path
-        console.log(grid.path.reverse());
-      }
-  
-      //remove current from grid.openSet
-      grid.openSet.splice(lowestIndex, 1);
-      //add current to grid.closedSet
-      grid.closedSet.push(current);
-    
-      for (let neigh of graph.edges[current.coordinate]) {
-        let neighbor = findNode(neigh.node);
-        if (!grid.closedSet.includes(neighbor)) {
-          let possibleG = current.g + 1;
-  
-          if (!grid.openSet.includes(neighbor)) {
-            grid.openSet.push(neighbor);
-          } else if (possibleG >= neighbor.g) {
-            continue;
-          }
-  
-          neighbor.g = possibleG;
-          neighbor.h = heuristic(neighbor, grid.end);
-          neighbor.f = neighbor.g + neighbor.h;
-          neighbor.parent = current;
-        }
+function search(grid) {
+  let searching = [];
+  while (grid.openSet.length > 0) {
+    let lowestIndex = 0;
+    for (let i = 0; i < grid.openSet.length; i++) {
+      if (grid.openSet[i].f < grid.openSet[lowestIndex].f) {
+        lowestIndex = i;
       }
     }
+    let current = grid.openSet[lowestIndex];
+
+    if (current.coordinate.toString() == grid.end.coordinate.toString()) {
+      graph.pathFound = true;
+      let temp = current;
+      grid.path.push(temp);
+      while (temp.parent) {
+        grid.path.push(temp.parent);
+        temp = temp.parent;
+      }
+      for(let pathNode of grid.path){
+        for(let node of graph.nodes){
+          if(node.coordinate.toString() == pathNode.coordinate.toString())
+            graph.pathNodesAStar.push(node);
+        }
+      }
+      graph.pathNodesAStar = graph.pathNodesAStar.reverse();
+      return {"searching":searching,"path":graph.pathNodesAStar};
+    }
+
+    //remove current from grid.openSet
+    grid.openSet.splice(lowestIndex, 1);
+    //add current to grid.closedSet
+    grid.closedSet.push(current);
   
-    //no solution by default
-    return [];
+    for (let neigh of graph.edges[current.coordinate]) {
+      let presentNode = findGraphNode(neigh.node);
+      if(presentNode.blocked == true)
+        continue;
+      let neighbor = findNode(neigh.node,grid);
+      if(!searching.includes(neighbor.coordinate))
+        searching.push(neighbor.coordinate);
+      if (!grid.closedSet.includes(neighbor)) {
+        let possibleG = current.g + 1;
+
+        if (!grid.openSet.includes(neighbor)) {
+          grid.openSet.push(neighbor);
+        } else if (possibleG >= neighbor.g) {
+          continue;
+        }
+
+        neighbor.g = possibleG;
+        neighbor.h = heuristic(neighbor, grid.end);
+        neighbor.f = neighbor.g + neighbor.h;
+        neighbor.parent = current;
+      }
+    }
   }
+  return {"searching":searching,"path":graph.pathNodesAStar};
+}
   
 
 function heuristic(position0, position1) {
     let d1 = Math.abs(position1.coordinate[0] - position0.coordinate[0]);
     let d2 = Math.abs(position1.coordinate[1] - position0.coordinate[1]);
     return d1 + d2;
-  }
-
+}
