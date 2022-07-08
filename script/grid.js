@@ -262,6 +262,8 @@ function graphReady(algorithm){
         switch(algorithm){
             case 1: time = dijkstras(start,finish);
                     break;
+            case 2: time = aStar(start,finish);
+                    break;
         }
         if(!graph.pathFound)
                         setTimeout(messageContent,time*10,"No Path Available");

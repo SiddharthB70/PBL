@@ -50,7 +50,8 @@ function operation(i){
                 break;
         case 6: graphReady(1);
                 break;
-        case 7: break;
+        case 7: graphReady(2);
+                break;
         case 8: messageContent("Grid Cleared");
                 clearGrid();
                 break;
