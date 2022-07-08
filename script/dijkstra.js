@@ -67,7 +67,6 @@ function dijkstras(start,finish) {
                 if(!(searching.includes(neighbor.node)))
                 {
                     searching.push(neighbor.node);
-                    comparisons++;
                 }
                     
                 let distanceToNeighbor = distanceFromStart[current] + neighbor.weight;

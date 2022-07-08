@@ -8,20 +8,6 @@ function createButtons(){
     }
 }
 
-// function buttonContent(i){
-//     switch(i){
-//         case 1: return "Start Node";
-//         case 2: return "End Node";
-//         case 3: return "Add Blocked Nodes";
-//         case 4: return "Remove Blocked Nodes";
-//         case 5: return "Clear Blocked Nodes";
-//         case 6: return "Dijkstra's Algorithm";
-//         case 7: return "A* Aglorithm"
-//         case 8: return "Clear Grid"
-//         case 9: return "Compare"
-//     }
-// }
-
 function operation(i){
     removeAllEvents();
     switch(i){

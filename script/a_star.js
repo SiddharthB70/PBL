@@ -105,7 +105,6 @@ function search(grid) {
 
         neighbor.g = possibleG;
         neighbor.h = heuristic(neighbor, grid.end);
-        comparisons++;
         neighbor.f = neighbor.g + neighbor.h;
         neighbor.parent = current;
       }
